@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0
+">    <title>Format JSON object</title>
+</head>
+<body>
+    <h1>Formatted Object Output</h1>
+
+    <p id="output"></p>
+
+    <script>
+        // Sample JSON object
+        const person = {
+            name: "John Doe",
+            age: 30,
+            occupation: "Developer"
+        };
+
+        function formatPerson(person) {
+            return `Name: ${person.name}, Age: ${person.age}, Occupation: ${person.occupation}`;
+        }
+
+        document.getElementById("output").textContent = formatPerson(person);
+    </script>
+</body>
+</html>
+    

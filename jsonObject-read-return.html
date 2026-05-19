@@ -2,13 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0
-">    <title>Format JSON object</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>Format JSON object</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Formatted Object Output</h1>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-6">
 
-    <p id="output"></p>
+    <div class="bg-white shadow-2xl rounded-2xl p-8 max-w-xl w-full border border-slate-200">
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-3xl font-bold text-slate-800">
+                User Profile
+            </h1>
+        </div>
+
+        <div class="space-y-4">
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                <p class="text-sm text-slate-500 mb-1">Name</p>
+                <p id="name" class="text-xl font-semibold text-slate-800"></p>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                <p class="text-sm text-slate-500 mb-1">Age</p>
+                <p id="age" class="text-xl font-semibold text-slate-800"></p>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                <p class="text-sm text-slate-500 mb-1">Occupation</p>
+                <p id="occupation" class="text-xl font-semibold text-slate-800"></p>
+            </div>
+        </div>
+
+        <div class="mt-8 bg-blue-600 text-white rounded-xl p-4 text-center">
+            <p id="formattedOutput" class="text-lg font-medium"></p>
+        </div>
+    </div>
 
     <script>
         // Sample JSON object
@@ -22,7 +47,10 @@
             return `Name: ${person.name}, Age: ${person.age}, Occupation: ${person.occupation}`;
         }
 
-        document.getElementById("output").textContent = formatPerson(person);
+        document.getElementById("name").textContent = person.name;
+        document.getElementById("age").textContent = person.age;
+        document.getElementById("occupation").textContent = person.occupation;
+        document.getElementById("formattedOutput").textContent = formatPerson(person);
     </script>
 </body>
 </html>

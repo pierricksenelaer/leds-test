@@ -4,53 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <title>Format JSON object</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script> 
 </head>
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-6">
 
-    <div class="bg-white shadow-2xl rounded-2xl p-8 max-w-xl w-full border border-slate-200">
-        <div class="flex items-center justify-between mb-6">
-            <h1 class="text-3xl font-bold text-slate-800">
-                User Profile
+    <main class="w-full max-w-3xl bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+        <header class="px-8 py-6 border-b border-slate-200 flex items-center justify-between bg-slate-50 gap-10">
+            <h1 class="text-3xl font-bold text-slate-900 text-center">
+                JSON Object Formatter
             </h1>
-        </div>
+            <p class="text-slate-500 mt-1">This example demonstrates how to dynamically read a JSON object and format its properties into a readable string.</p>
+        </header>
+        <section class="p-8">
+            <!-- Dynamic cards inserted here -->
+            <div id="fields" class="grid gap-4 sm:grid-cols-2"></div>
 
-        <div class="space-y-4">
-            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <p class="text-sm text-slate-500 mb-1">Name</p>
-                <p id="name" class="text-xl font-semibold text-slate-800"></p>
+            <!-- Final formatted output -->
+            <div class="mt-8 rounded-2xl bbg-slate-900 p-6">
+                <p class="text-slate-400 text-sm uppercase tracking-wider mb-2">
+                    Formatted Output
+                </p>
+                <p id="output" class="text-lg leading-relaxed break-words"></p>
             </div>
-            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <p class="text-sm text-slate-500 mb-1">Age</p>
-                <p id="age" class="text-xl font-semibold text-slate-800"></p>
-            </div>
-            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <p class="text-sm text-slate-500 mb-1">Occupation</p>
-                <p id="occupation" class="text-xl font-semibold text-slate-800"></p>
-            </div>
-        </div>
-
-        <div class="mt-8 bg-blue-600 text-white rounded-xl p-4 text-center">
-            <p id="formattedOutput" class="text-lg font-medium"></p>
-        </div>
-    </div>
+        </section>
+    </main> 
 
     <script>
-        // Sample JSON object
-        const person = {
+
+        // Source object data
+        const data = {
             name: "John Doe",
             age: 30,
             occupation: "Developer"
         };
 
-        function formatPerson(person) {
-            return `Name: ${person.name}, Age: ${person.age}, Occupation: ${person.occupation}`;
-        }
+        // Capitalize the first letter of a string
+        const formatLabel = (value) =>
+            value.charAt(0).toUpperCase() + value.slice(1);
 
-        document.getElementById("name").textContent = person.name;
-        document.getElementById("age").textContent = person.age;
-        document.getElementById("occupation").textContent = person.occupation;
-        document.getElementById("formattedOutput").textContent = formatPerson(person);
+        // Convert the object into a formatted string
+        const formatObject = (obj) => 
+            Object.entries(obj)
+                .map(([key, value]) => `${formatLabel(key)}: ${value}`) // Array destructuring to format each key-value pair
+                .join(', ');
+
+        // Generate dynamic cards for each property in the object using array destructuring in the function parameters
+        const createFieldCard = ([key, value]) => ` 
+            <article class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                <!-- Card label -->
+                <p class="text-sm text-slate-500 mb-1">
+                    ${formatLabel(key)}
+                </p>
+                <!-- Card value -->
+                <p class="text-xl font-semibold text-slate-800">
+                    ${value}
+                </p>
+            </article>
+        `;
+        
+        // Get the container for the cards
+        const fieldsContainer = document.getElementById('fields');
+
+        // Create and insert cards for each property in the data object
+        fieldsContainer.innerHTML = Object.entries(data) // Convert the object into an array of [key, value] pairs
+            .map(createFieldCard) // Map each pair to a card element using the createFieldCard function
+            .join(''); // Concatenate the array of card elements into a single string for insertion
+        
+        // Get the output element and set its content to the formatted string
+        const outputElement = document.getElementById('output');
+        outputElement.textContent = formatObject(data);
+        // The output will be: "Name: John Doe, Age: 30, Occupation: Developer"
+        console.log(formatObject(data));
     </script>
 </body>
 </html>

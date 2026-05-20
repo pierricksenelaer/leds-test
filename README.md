@@ -105,3 +105,33 @@ The solution below uses ES6+ Javascript features and reflect modern javascript f
 - Modern DOM rendering patterns
 
 This [commit](https://github.com/pierricksenelaer/leds-test/commit/48461338adfc37190de5d1056800f3155f1c6bf7) will show you the finished code with comments to give you context on how it was built
+
+## 2. Debug a JavaScript function
+
+Here is the function that does not work
+
+```
+function calculateTotal(prices) {
+let total = 0;
+for (let i = 0; i <= prices.length; i++) {
+total += prices[i];
+}
+return total;
+}
+const prices = [10, 20, 30, 40, 50];
+console.log(calculateTotal(prices));
+```
+
+Bug: it is in the `for` loop condition
+
+Arrays are zero indexed so the last valid index is `prices.length - 1` but when `<=` is in use, the loop runs one extra time, causing `prices[i]` to become `undefined`
+
+In simpler terms, javascript sees these below are valid indexes only `0,1,2,3,4` but the loop keeps going while `i` is less than or equal to `5`
+
+To fix, we need to replace
+`<= prices.length`
+with
+`< prices.length`
+so now the loop stops before `i` reaches `5`
+
+This [commit](https://github.com/pierricksenelaer/leds-test/commit/77bf33549cebc9b07c5839314fdcb69febe28f6a) will show you the fixed function code.
